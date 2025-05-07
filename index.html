@@ -1,19 +1,517 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cosmos Bible</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmos Bible</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
 </head>
 <body>
-  <div id="cosmos-bg"></div>
-  <div class="intro-container">
-    <h1>Welcome to Cosmos Bible</h1>
-    <p>Your Journey Through the Word Begins Here</p>
-    <button class="pulse-button" onclick="window.location.href='options.html'">Tap to Begin</button>
-  </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-  <script src="intro.js"></script>
+    <div class="app-container">
+        <!-- Intro Page -->
+        <div class="intro-page active" id="intro-page">
+            <div class="cosmic-background" id="cosmic-background"></div>
+            <div class="intro-content">
+                <h1 class="title">COSMOS BIBLE</h1>
+                <div class="pulsating-orb" id="begin-button">
+                    <span class="orb-text">TAP TO BEGIN</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Options Page -->
+        <div class="options-page" id="options-page">
+            <div class="options-content">
+                <h2 class="options-title">SELECT YOUR JOURNEY</h2>
+                <div class="options-container">
+                    <div class="option-card" id="free-mode">
+                        <div class="option-icon">
+                            <div class="icon-circle">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <h3>FREE MODE</h3>
+                        <p>Access essential scripture, basic search, and daily verses</p>
+                        <button class="option-button">SELECT</button>
+                    </div>
+                    <div class="option-card premium" id="premium-mode">
+                        <div class="premium-badge">PREMIUM</div>
+                        <div class="option-icon">
+                            <div class="icon-circle">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                                    <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                                    <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                                </svg>
+                            </div>
+                        </div>
+                        <h3>PREMIUM MODE</h3>
+                        <p>Full access to all translations, advanced study tools, and personalized insights</p>
+                        <button class="option-button">SELECT</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sign In/Sign Up Page -->
+        <div class="sign-in-page" id="sign-in-page">
+            <div class="cosmic-background" id="auth-background"></div>
+            <div class="auth-container">
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <h2 class="auth-title">COSMOS PREMIUM</h2>
+                        <p class="auth-subtitle">Sign in or create an account to access premium features</p>
+                    </div>
+                    
+                    <div class="auth-tabs">
+                        <button class="auth-tab active" data-tab="sign-in">Sign In</button>
+                        <button class="auth-tab" data-tab="sign-up">Sign Up</button>
+                    </div>
+                    
+                    <!-- Sign In Form -->
+                    <div class="auth-form active" id="sign-in-form">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" class="auth-input" placeholder="Enter your email">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" class="auth-input" placeholder="Enter your password">
+                            <a href="#" class="forgot-password">Forgot Password?</a>
+                        </div>
+                        <button class="auth-button" id="sign-in-button">
+                            <span>Sign In</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </button>
+                        <div class="social-auth">
+                            <p>Or sign in with</p>
+                            <div class="social-buttons">
+                                <button class="social-button google">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                                        <path fill="currentColor" d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z"/>
+                                    </svg>
+                                </button>
+                                <button class="social-button facebook">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                                        <path fill="currentColor" d="M20.9,2H3.1C2.5,2,2,2.5,2,3.1v17.8C2,21.5,2.5,22,3.1,22h9.6v-7.7h-2.6v-3h2.6V9.2c0-2.6,1.6-4,3.9-4c1.1,0,2.1,0.1,2.3,0.1v2.7h-1.6c-1.3,0-1.5,0.6-1.5,1.5v1.9h3l-0.4,3h-2.6V22h5.1c0.6,0,1.1-0.5,1.1-1.1V3.1C22,2.5,21.5,2,20.9,2z"/>
+                                    </svg>
+                                </button>
+                                <button class="social-button apple">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                                        <path fill="currentColor" d="M14.94,5.19A4.38,4.38,0,0,0,16,2,4.44,4.44,0,0,0,13,3.52,4.17,4.17,0,0,0,12,6.61,3.69,3.69,0,0,0,14.94,5.19Zm2.52,7.44a4.51,4.51,0,0,1,2.16-3.81,4.66,4.66,0,0,0-3.66-2c-1.56-.16-3,.91-3.83.91s-2-.89-3.3-.87A4.92,4.92,0,0,0,4.69,9.39C2.93,12.45,4.24,17,6,19.47,6.8,20.68,7.8,22.05,9.12,22s1.75-.82,3.28-.82,2,.82,3.3.79,2.22-1.24,3.06-2.45a11,11,0,0,0,1.38-2.85A4.41,4.41,0,0,1,17.46,12.63Z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sign Up Form -->
+                    <div class="auth-form" id="sign-up-form">
+                        <div class="form-group">
+                            <label for="full-name">Full Name</label>
+                            <input type="text" id="full-name" class="auth-input" placeholder="Enter your full name">
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-email">Email</label>
+                            <input type="email" id="signup-email" class="auth-input" placeholder="Enter your email">
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-password">Password</label>
+                            <input type="password" id="signup-password" class="auth-input" placeholder="Create a password">
+                            <p class="password-hint">Password must be at least 8 characters</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm-password">Confirm Password</label>
+                            <input type="password" id="confirm-password" class="auth-input" placeholder="Confirm your password">
+                        </div>
+                        <div class="form-group checkbox">
+                            <input type="checkbox" id="terms" class="auth-checkbox">
+                            <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+                        </div>
+                        <button class="auth-button" id="sign-up-button">
+                            <span>Create Account</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <div class="premium-features">
+                        <h3>Premium Features Include:</h3>
+                        <ul class="features-list">
+                            <li>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                <span>Access to all Bible translations</span>
+                            </li>
+                            <li>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                <span>Advanced study tools and commentaries</span>
+                            </li>
+                            <li>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                <span>Original language word studies</span>
+                            </li>
+                            <li>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                <span>Interactive maps and timelines</span>
+                            </li>
+                            <li>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                <span>Ad-free experience</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Page -->
+        <div class="dashboard-page" id="dashboard-page">
+            <div class="sidebar">
+                <div class="logo-container">
+                    <h3 class="sidebar-logo">COSMOS</h3>
+                </div>
+                <nav class="sidebar-nav">
+                    <ul>
+                        <li class="nav-item" data-section="home">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                            </svg>
+                            <span>Home</span>
+                        </li>
+                        <li class="nav-item active" data-section="read">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                            </svg>
+                            <span>Read</span>
+                        </li>
+                        <li class="nav-item" data-section="search">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                            <span>Search</span>
+                        </li>
+                        <li class="nav-item" data-section="study">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                            </svg>
+                            <span>Study</span>
+                        </li>
+                        <li class="nav-item" data-section="notes">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10 9 9 9 8 9"></polyline>
+                            </svg>
+                            <span>Notes</span>
+                        </li>
+                        <li class="nav-item" data-section="bookmarks">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                            </svg>
+                            <span>Bookmarks</span>
+                        </li>
+                        <li class="nav-item" data-section="settings">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="3"></circle>
+                                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                            </svg>
+                            <span>Settings</span>
+                        </li>
+                        <li class="nav-item logout-item" id="logout-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                                <polyline points="16 17 21 12 16 7"></polyline>
+                                <line x1="21" y1="12" x2="9" y2="12"></line>
+                            </svg>
+                            <span>Logout</span>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="user-profile">
+                    <div class="profile-image">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </div>
+                    <div class="profile-info">
+                        <h4>Guest User</h4>
+                        <span class="user-status">Free Mode</span>
+                    </div>
+                </div>
+            </div>
+            <div class="main-content">
+                <!-- Home Section -->
+                <section class="content-section" id="home-section">
+                    <div class="section-header">
+                        <h2>Welcome to Cosmos Bible</h2>
+                        <p class="current-date" id="current-date"></p>
+                    </div>
+                    <div class="dashboard-grid">
+                        <div class="dashboard-card verse-of-day">
+                            <h3>Verse of the Day</h3>
+                            <div class="verse-content">
+                                <p class="verse-text">"For God so loved the world, that he gave his only Son, that whoever believes in him should not perish but have eternal life."</p>
+                                <p class="verse-reference">John 3:16</p>
+                            </div>
+                            <button class="card-button">Share</button>
+                        </div>
+                        <div class="dashboard-card reading-plan">
+                            <h3>Reading Plan</h3>
+                            <div class="reading-progress">
+                                <div class="progress-bar">
+                                    <div class="progress" style="width: 35%;"></div>
+                                </div>
+                                <span class="progress-text">35% Complete</span>
+                            </div>
+                            <div class="reading-info">
+                                <p>Today's Reading: <span>Psalms 23-25</span></p>
+                            </div>
+                            <button class="card-button">Continue Reading</button>
+                        </div>
+                        <div class="dashboard-card recent-notes">
+                            <h3>Recent Notes</h3>
+                            <ul class="notes-list">
+                                <li class="note-item">
+                                    <p class="note-reference">Matthew 5:3-12</p>
+                                    <p class="note-preview">Thoughts on the Beatitudes and their meaning in modern context...</p>
+                                </li>
+                                <li class="note-item">
+                                    <p class="note-reference">Proverbs 3:5-6</p>
+                                    <p class="note-preview">Reflection on trusting God's guidance in difficult decisions...</p>
+                                </li>
+                            </ul>
+                            <button class="card-button">View All Notes</button>
+                        </div>
+                        <div class="dashboard-card quick-access">
+                            <h3>Quick Access</h3>
+                            <div class="quick-buttons">
+                                <button class="quick-button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                                    </svg>
+                                    <span>Last Read</span>
+                                </button>
+                                <button class="quick-button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="11" cy="11" r="8"></circle>
+                                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                    </svg>
+                                    <span>Search</span>
+                                </button>
+                                <button class="quick-button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                                    </svg>
+                                    <span>Bookmarks</span>
+                                </button>
+                                <button class="quick-button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <line x1="12" y1="8" x2="12" y2="16"></line>
+                                        <line x1="8" y1="12" x2="16" y2="12"></line>
+                                    </svg>
+                                    <span>New Note</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Read Section -->
+                <section class="content-section active" id="read-section">
+                    <div class="section-header">
+                        <h2>Read Scripture</h2>
+                        <div class="section-controls">
+                            <select class="scripture-select" id="book-select">
+                                <option value="">Select Book</option>
+                                <option value="genesis">Genesis</option>
+                                <option value="exodus">Exodus</option>
+                                <option value="leviticus">Leviticus</option>
+                                <!-- More books would be added here -->
+                            </select>
+                            <select class="scripture-select" id="chapter-select">
+                                <option value="">Chapter</option>
+                            </select>
+                            <select class="scripture-select" id="version-select">
+                                <option value="kjv">King James Version</option>
+                                <option value="niv">New International Version</option>
+                                <option value="esv">English Standard Version</option>
+                                <option value="nlt">New Living Translation</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="scripture-container">
+                        <div class="scripture-content">
+                            <h3 class="scripture-title">Select a passage to begin reading</h3>
+                            <div class="scripture-text">
+                                <p class="scripture-placeholder">Choose a book and chapter from the dropdown menus above to start reading.</p>
+                            </div>
+                        </div>
+                        <div class="scripture-tools">
+                            <button class="tool-button" title="Bookmark this passage">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                                </svg>
+                                <span>Bookmark</span>
+                            </button>
+                            <button class="tool-button" title="Add a note">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                </svg>
+                                <span>Add Note</span>
+                            </button>
+                            <button class="tool-button" title="Share this passage">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="18" cy="5" r="3"></circle>
+                                    <circle cx="6" cy="12" r="3"></circle>
+                                    <circle cx="18" cy="19" r="3"></circle>
+                                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                                </svg>
+                                <span>Share</span>
+                            </button>
+                            <button class="tool-button premium-tool" title="Study this passage">
+                                <div class="premium-badge">PREMIUM</div>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                                <span>Study</span>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Other sections would be added here -->
+                
+                <!-- Search Section -->
+                <section class="content-section" id="search-section">
+                    <div class="section-header">
+                        <h2>Search Scripture</h2>
+                    </div>
+                    <div class="search-container">
+                        <div class="search-bar">
+                            <input type="text" class="search-input" placeholder="Search by keyword, verse, or topic...">
+                            <button class="search-button">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="search-filters">
+                            <select class="filter-select">
+                                <option value="all">All Books</option>
+                                <option value="ot">Old Testament</option>
+                                <option value="nt">New Testament</option>
+                                <option value="gospels">Gospels</option>
+                                <option value="epistles">Epistles</option>
+                            </select>
+                            <select class="filter-select">
+                                <option value="kjv">King James Version</option>
+                                <option value="niv">New International Version</option>
+                                <option value="esv">English Standard Version</option>
+                                <option value="nlt">New Living Translation</option>
+                            </select>
+                        </div>
+                        <div class="search-results">
+                            <p class="results-placeholder">Enter a search term to find relevant verses.</p>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Study Section -->
+                <section class="content-section" id="study-section">
+                    <div class="section-header">
+                        <h2>Study Tools</h2>
+                    </div>
+                    <div class="study-container">
+                        <div class="study-tools-grid">
+                            <div class="study-card">
+                                <div class="study-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                                    </svg>
+                                </div>
+                                <h3>Commentaries</h3>
+                                <p>Access scholarly insights and interpretations</p>
+                                <button class="study-button">Open</button>
+                            </div>
+                            <div class="study-card">
+                                <div class="study-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                                    </svg>
+                                </div>
+                                <h3>Concordance</h3>
+                                <p>Find every occurrence of a word in scripture</p>
+                                <button class="study-button">Open</button>
+                            </div>
+                            <div class="study-card premium-feature">
+                                <div class="premium-badge">PREMIUM</div>
+                                <div class="study-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                                    </svg>
+                                </div>
+                                <h3>Original Languages</h3>
+                                <p>Explore Hebrew and Greek word studies</p>
+                                <button class="study-button">Upgrade</button>
+                            </div>
+                            <div class="study-card premium-feature">
+                                <div class="premium-badge">PREMIUM</div>
+                                <div class="study-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg>
+                                </div>
+                                <h3>Atlas & Maps</h3>
+                                <p>Interactive biblical geography and history</p>
+                                <button class="study-button">Upgrade</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
 </body>
 </html>
