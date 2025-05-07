@@ -15,10 +15,22 @@
     --font-secondary: 'Montserrat', sans-serif;
 }
 
+/* Cross-browser compatibility */
 * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+}
+
+/* Ensure smooth scrolling works across browsers */
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -725,11 +737,15 @@ body {
     left: 0;
     width: 280px;
     height: 100vh;
-    background: var(--sidebar-bg);
+    background: var(--card-bg);
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
-    border-right: 1px solid rgba(67, 203, 255, 0.1);
-    padding: 2rem 1.5rem;
-    display: flex;
+    border-right: 1px solid rgba(67, 203, 255, 0.2);
+    height: 100%;
+    padding: 1.5rem 0;
+    width: 250px;
+    position: relative;
+    z-index: 10;
     flex-direction: column;
     z-index: 10;
     box-shadow: 5px 0 20px rgba(0, 0, 0, 0.2);
